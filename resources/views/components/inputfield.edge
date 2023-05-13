@@ -1,0 +1,29 @@
+{{-- input field with label
+    formId   : id for the FORM tag (optional)
+    label    : field label (string) (optional)
+    name     : field name (string)
+    value    : field value 
+    required : true,false
+--}}
+@if(label)
+<div class="ui field">
+    <label>{{label}}</label>
+    <input 
+        @if(formId)
+        form="{{formId}}" 
+        @end
+        type="text" 
+        name="{{name}}" 
+        value="{{value}}" {{required?"required":''}} >
+</div>
+@else 
+<div class="ui fluid input">
+    <input 
+        @if(formId)
+        form="{{formId}}" 
+        @end
+        type="text" 
+        name="{{name}}" 
+        value="{{value}}" {{required?"required":''}} >
+</div>
+@end

@@ -1,0 +1,114 @@
+@layout('layouts/login-register')
+
+@set('title','Register')
+@section('css')
+    <style>
+        body {
+      background: linear-gradient(to top, #0c134f, #d4adfc);
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 450px;
+      margin-top: 100px;
+    }
+    </style>
+@endsection
+@section('body')
+    {{--  <h1 class="ui header">Register</h1>
+    <form class="ui form" action="{{ route('users.register')}}" method="post">
+        {{ csrfField() }}
+        @!input({label: 'Username', name: 'username', value: flashMessages.get('username',''), wide: 'four'})
+        @!input({label: 'Password', name: 'password', type:"password", wide: 'four'})
+        @!input({label: 'Confirm Password', name: 'confirmpassword', type:"password", wide: 'four'})
+        @!input({type: 'submit', value: 'Register'})
+    </form>  --}}
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui teal image header">
+      <div class="content" style="color: black; text-shadow: 2px 2px 5px #00b5ad;">
+        MyMoney
+      </div>
+    </h2>
+    {{--  @if(flashMessages.has('error'))
+        <div class="ui negative message">{{ flashMessages.get('error') }}</div>
+    @elseif(flashMessages.has('message'))
+        <div class="ui positive message">{{ flashMessages.get('message') }}</div>
+    @end  --}}
+    <form class="ui large form " action="{{ route('users.register')}}" method="post">
+     {{ csrfField() }}
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" id="username" name="username" placeholder="Username">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input class="username" type="password" name="password" placeholder="Password">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="confirmpassword" placeholder="Confirm Password">
+          </div>
+        </div>
+        <input class="ui fluid large teal submit button" type="submit" value="Register">
+      </div>
+
+      <div class="ui error message"></div>
+
+    </form>
+
+    <div class="ui message">
+      You have account? <a href="{{ route('login')}}">Login</a>
+    </div>
+  </div>
+</div>
+@end
+
+@section('script')
+    <script>
+        $('.ui.form').form({
+            fields:{
+                username:['minLength[6]','empty'],
+                password:['minLength[6]','empty'],
+                confirmpassword: ['match[password]','empty']
+            }
+        })
+        $('#username').on('change', function(){
+            let username = $('#username').val()
+            console.log(`register.edge ${username}`)
+            $.ajax({ url:"/users/verify",
+                             method:'post',
+                             data:{
+                                username : username
+                             },
+                             headers:{
+                                'x-csrf-token': $('[name=_csrf]').val()
+                             },
+                             detatype:'json',
+                             statusCode:{
+                                203: function(){
+                                    alert("The username is already used!");
+                                }
+                             },
+                             success: function(res){
+                                console.log(res);
+                                if(res.redirect){
+                                    window.location.href = res.url;
+                                }
+                             }
+                    });
+        })
+    </script>
+@end
+
+

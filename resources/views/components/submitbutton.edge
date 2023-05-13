@@ -1,0 +1,11 @@
+{{--
+    formId : id for the FORM tag (optional)
+    label  : submit label (string)
+--}}
+<input 
+    @if(formId)
+    form="{{formId}}"
+    @end
+    type="submit" 
+    class="ui button" 
+    value="{{label}}" >

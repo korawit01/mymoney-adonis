@@ -1,0 +1,16 @@
+{{--
+  label       : field label
+  name        : field name
+  other props : other textarea attributes such as rows, cols placeholder
+--}}
+<div class="field">
+    <label for="{{name}}">{{label}}</label>
+    <textarea id="{{name}}" {{ $props.serializeExcept(['label','value']) }}>
+    @if(value)
+    {{ value }}
+    @end
+</textarea>
+    @if(flashMessages.has('errors.'+name))
+      <div class="ui negative message"> {{ flashMessages.get('errors.'+name) }}</div>
+    @endif
+</div>

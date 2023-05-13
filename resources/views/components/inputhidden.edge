@@ -1,0 +1,14 @@
+{{-- hidden field
+    formId   : id for the FORM tag (optional)
+    name     : field name (string)
+    value    : field value 
+    required : true,false
+--}}
+<input 
+    @if(formId)
+    form="{{formId}}"
+    @end
+    type="hidden" 
+    name="{{name}}" 
+    value="{{value}}">
+    

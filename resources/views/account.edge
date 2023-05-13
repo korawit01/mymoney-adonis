@@ -1,0 +1,104 @@
+@layout('layouts/master')
+
+@set('title','account')
+@section('css')
+    <style>
+        body {
+      background: linear-gradient(to top, #0c134f, #d4adfc);
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 450px;
+      margin-top: 100px;
+    }
+    .all-account{
+        display: grid;
+        grid-template-columns: 302px 302px 302px 302px;
+        margin-top: 20px;
+        text-align: center;
+    }
+    .all-account div{
+        background-color:#1d267d;
+        width: 200px;
+        margin-top: 20px;
+        
+    }
+    .all-account img{
+        width: 200px;
+    }
+    .all-account .name{
+        position: absolute;
+        margin-top: -170px;
+        height: 50px;
+        padding-top: 12px;
+        font-size: 20px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        color: white;
+        
+    }
+    .all-account .change-name{
+        position: absolute;
+        margin-top: -50px;
+        height: 80px;
+        padding-top: -10px;
+        
+    }
+    .all-account .new-account{
+        font-size: 100px;
+        padding-top: 120px;
+        height: 280px;
+    }
+    
+    </style>
+@endsection
+
+@section('body')
+
+
+    <h1 class="ui header">MyMoney</h1>
+    <div class="all-account">
+        @each((account, index) in accounts)
+        <div>
+        <a href="{{ route('notes.show',{id:account.id}) }}">
+        <img src="https://cannibalhalflinggaming.files.wordpress.com/2021/07/grimoire.png">
+        <div class="name">
+          {{account.acName}}
+        </div >
+        </a>
+        <div class="change-name" style="margin-top: -70px; ">
+        @if(accountE)
+        @if(accountE[0].id == account.id)
+          <form class="ui form" id="accounts"
+            action="{{route('accounts.update',{id:account.id})}}" method="post">
+        {{csrfField()}}
+            <div style="margin-top: -20px;">
+          @!component('components/inputfield',{name:'acName', value:account.acName, required:true})
+          </div>
+        <input class="ui button green" type="submit" value="Confirm" form="accounts" style="margin-top: 10px;">
+        <a class="ui button red" href="{{ route('home') }}">Cancel</a>
+        </form>
+        @end
+        @end
+        @if(!accountE)
+          <a style="margin-top: 30px;" class="ui button yellow" href="{{ route('accounts.edit',{id:account.id}) }}">Change name</a>
+        @end       
+        </div>
+        <div></div>
+        <a href="{{ route('accounts.delete',{id:account.id}) }}" style="color: black; background-color:black">
+        <div style="background-color: red; margin-top:10px; color:white;">
+        Delete
+        </div>
+        </a>
+        </div>
+        @end
+        <a href="{{ route('accounts.store') }}"  ><div class="new-account" style="color: white;">+</div></a>
+    </div>
+@endsection

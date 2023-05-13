@@ -1,0 +1,21 @@
+{{-- dropdown field with label
+    formId   : id for the FORM tag (optional)
+    label    : field label (string) (optional)
+    name     : field name (string)
+    value    : field value 
+    choices  : array of string
+--}}
+<div class="field" >
+    @if(label)
+    <label>{{label}}</label>
+    @end
+    <select name="{{name}}">
+    @each(choice in choices)
+    <option 
+        @if(formId)
+        form="{{formId}}"
+        @end
+        value="{{choice}}" {{ value==choice?"selected":""}}> {{choice}}</option>
+    @end
+    </select>
+</div>

@@ -1,0 +1,20 @@
+{{--
+  label       : field label
+  name        : field name
+  wide        : field wide (one, two, ..., sixteen)
+  other props : other input attributes such as type, size, placeholder
+--}}
+<div class="{{wide?wide+' wide':''}} field">
+    @if(label)
+       <label for="{{name}}">{{label}}</label>
+    @end
+    @if(type=="submit")
+       <input id="{{name}}" class="ui button" {{ $props.serializeExcept(['label']) }}>
+    @else
+       <input id="{{name}}" {{ $props.serializeExcept(['label']) }}>
+    @end
+    @if(flashMessages.has('errors.'+name))
+      <div class="ui negative message">{{ flashMessages.get('errors.'+name) }}</div>
+    @endif
+</div>
+

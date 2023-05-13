@@ -1,0 +1,78 @@
+@layout('layouts/login-register')
+
+@set('title','Login')
+@section('css')
+    <style>
+        body {
+      background: linear-gradient(to top, #0c134f, #d4adfc);
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 450px;
+      margin-top: 100px;
+    }
+    </style>
+@endsection
+@section('body')
+    {{--  <h1 class="ui header">Login</h1>
+    @if(flashMessages.has('error'))
+        <div class="ui negative message">{{ flashMessages.get('error') }}</div>
+    @elseif(flashMessages.has('message'))
+        <div class="ui positive message">{{ flashMessages.get('message') }}</div>
+    @end
+    <form class="ui form" action="{{ route('users.login')}}" method="post">
+        {{ csrfField() }}
+        @!input({label: 'Username', name: 'username', wide: 'four'})
+        @!input({label: 'Password', name: 'password', type:"password", wide: 'four'})
+        @!input({type: 'submit', value: 'Login'})
+    </form>  --}}
+
+
+    <div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui teal image header">
+      <div class="content" style="color: black; text-shadow: 2px 2px 5px #00b5ad;">
+        MyMoney
+      </div>
+    </h2>
+    @if(flashMessages.has('error'))
+        <div class="ui negative message">{{ flashMessages.get('error') }}</div>
+    @elseif(flashMessages.has('message'))
+        <div class="ui positive message">{{ flashMessages.get('message') }}</div>
+    @end
+    <form class="ui large form " action="{{ route('users.login')}}" method="post">
+     {{ csrfField() }}
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="username" placeholder="Username">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" placeholder="Password">
+          </div>
+        </div>
+        <input class="ui fluid large teal submit button" type="submit" value="Login">
+      </div>
+
+      <div class="ui error message"></div>
+
+    </form>
+
+    <div class="ui message">
+      New to us? <a href="{{ route('register')}}">Sign Up</a>
+    </div>
+  </div>
+</div>
+@end
+
+
+

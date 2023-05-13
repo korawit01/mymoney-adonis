@@ -1,0 +1,87 @@
+@layout('layouts/master')
+
+@set('title','Note')
+
+@section('css')
+  <style>
+      body {
+      background: linear-gradient(to top, #0c134f, #d4adfc);
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 450px;
+      margin-top: 100px;
+    }
+  </style>
+@end
+@section('body')
+
+<h1 class="ui header">MyMoney</h1>
+<table class="ui selectable celled striped table"><a class="ui button black" href="{{route('home')}}"><</a><h2 style="color: white;">{{ account.acName }}</h2> <p style="color: white;">เงินรวม <span style="font-size: 24px; color:rgb(5, 5, 222)">{{noteGetM[0].amount - noteOutM[0].amount}}</span></p> <span style="color: white;">รายรับทั้งหมด <span style="font-size: 20px; color: rgb(88, 249, 88); ">{{noteGetM[0].amount == null ? 0 : noteGetM[0].amount}}</span></span> <p style="color: white;">รายจ่ายทั้งหมด <span style="font-size: 20px; color:red">{{noteOutM[0].amount == null ? 0 : noteOutM[0].amount}}</span></p>
+    <thead>
+        <tr>
+            <th class="one wide">No.</th>
+            <th class="two wide">Date</th>
+            <th class="one wide">Status</th>
+            <th class="two wide">Amount</th>
+            <th class="five wide">Detail</th>
+            <th class="three wide">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <form class="ui form" id="notes"
+            action="{{note ? route('notes.update',{id:note.id, aid:account.id}) : route('notes.store',{aid:account.id})}}"
+            method="post">
+            {{csrfField()}}
+            <tr class="positive">
+                <td>
+                    {{note ? "Edit" : "New"}}
+                    @!component('components/inputhidden',{name:'noteId', value:note ? note.id : '', required:true})
+                    @!component('components/inputhidden',{name:'noteName', value:account.acName, required:true})
+                </td>
+                <td>
+                    {{note ? "Edit" : "New"}}
+                </td>
+                <td >                   
+                    @!component('components/dropdownfield',{name:'status', value:note ? note.status : '', choices:['รายรับ','รายจ่าย'],required:true})
+                </td>
+                <td>
+                    @!component('components/inputfield',{name:'amount', value:note ? note.amount : '', required:true})
+                </td>
+                <td>
+                    @!component('components/inputfield',{name:'detail', value:note ? note.detail : '-'})
+                </td>
+                <td>
+                    @!component('components/submitbutton',{label:note?'Update':'Add',formId: 'notes'})
+                    <a href="{{route('notes.show',{id:account.id})}}" class="ui button">Cancel</a>
+                </td>
+
+    <tbody>
+        <!-- add loop directive here -->
+        @each((note, index) in notes)
+        <tr>
+            <td>{{index+1}}</td>
+            <td>{{note.postedOn}}</td>
+            @if(note.status == 'รายจ่าย')
+              <td style="border: 2px solid red;">{{note.status}} </td>
+            @else
+            <td style="border: 2px solid green;">{{note.status}} </td>
+            @end
+            <td>{{note.amount}}</td>
+            <td>{{note.detail}}</td>
+
+            <td>
+                <a href="{{ route('notes.edit',{id: note.id, aid: account.id}) }}" class="ui mini button">Edit</a>
+                <a href="{{ route('notes.delete',{id: note.id, aid: account.id}) }}" class="ui mini button">Delete</a>
+            </td>
+        </tr>
+        @endeach
+        <!-- add end loop directive here -->
+    </tbody>
+</table>
+@endsection

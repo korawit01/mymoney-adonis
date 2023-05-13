@@ -1,0 +1,16 @@
+<div class="ui black large menu inverted">
+    <div class="header item"><a href="{{ route('home') }}">MyMoney</a></div>
+
+    <div class="right menu">
+        @if(currentUser)
+        <div class="ui dropdown item">
+            User : &nbsp;&nbsp; {{ currentUser }}
+            <i class="dropdown icon"></i>
+            <div class="menu">
+            <div class="item"><a style="color: black;" href="{{ route('users.logout') }}">Log Out</a></div>
+            </div>
+        </div>
+        @end
+    </div>
+</div>
+
